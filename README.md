@@ -16,7 +16,7 @@ To create a jar file, just type `make dist` and a jar file named stackVM.jar wil
 
 # Input File Format
 
-The instructions are divided into 5 categories. All instructions must have their operands on the stack. Each 
+The instructions are divided into 5 categories: Arithmetical, Logical, Control ,Memory and IO. . All instructions must have their operands on the stack. Each 
 instruction can be preceding of a label followed by a colon.
 
 
