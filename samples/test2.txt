@@ -1,0 +1,20 @@
+
+start : getch
+        push 0
+        store
+        getch
+        push 1
+        store
+        getch
+        push 2
+        store
+        pc
+ here:  push 65
+        push 66
+        push 67
+        putch
+        putch
+        putch
+        push here
+        halt
+        

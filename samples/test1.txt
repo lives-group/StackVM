@@ -1,0 +1,34 @@
+{-
+  Este programa computa a sequencia de n elementos da serie de fibbonacci.
+-}
+
+start : push 0
+        push 0 
+        store   -- 0 no endreço 0
+        push 1  
+        push 1
+        store   -- 1 no endereço 1
+        push 4
+        push 2
+        store   -- N, nesse caso 4, no endereço 2 
+        pop     -- Joga o 4 fora !
+loop :  addi
+        push 1  
+        load
+        push 0
+        store
+        pop
+        push 1
+        store
+        push 0
+        load
+        push 1
+        push 2
+        load
+        subi
+        push 2
+        store
+        push 0
+        lt
+        jumpt loop
+        halt
