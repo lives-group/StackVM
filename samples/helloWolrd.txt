@@ -1,0 +1,24 @@
+ 
+push 'd'
+push 'r'
+push 'l'
+push 'o'
+push 'w'
+push ' '
+push 'o'
+push 'l'
+push 'l'
+push 'e'
+push 'h'
+putch
+putch
+putch
+putch
+putch
+putch
+putch
+putch
+putch
+putch
+putch
+halt

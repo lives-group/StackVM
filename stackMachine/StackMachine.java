@@ -24,7 +24,7 @@ public class StackMachine {
    public void runProgram(){
        try{ 
           if(program == null){ 
-              System.out.println("No program loaded.");
+              System.out.println("No program loaded. Nothing to execute !");
               return;
           }
           while((st.readPc() >= 0  && st.readPc() < program.length) && !st.isHalted()){
@@ -36,12 +36,11 @@ public class StackMachine {
           }
           if(st.isDebugable()){ System.out.println("\n"+st.state2Str());}
        }catch(Exception e){
-          System.out.println("[ ERROR ]: Illegal/inconsistent operation executed by instruction at " + 
-                              program[st.readPc()].getLine() + ", " + program[st.readPc()].getColumn() + "\n" +
-                              program[st.readPc()].pPrint(syn) + "\n Program aborted. \n" + 
-                              "Exception raised : " + e.getMessage()  ); 
-          
-          
+           System.out.println("[ ERROR ]: Illegal/inconsistent operation executed by instruction at " + 
+                               program[st.readPc()].getLine() + ", " + program[st.readPc()].getColumn() + "\n" +
+                               program[st.readPc()].pPrint(syn) + "\n Program aborted. \n" + 
+                               "Exception raised : " + e.getMessage()  );
+           if(st.isDebugable()){ System.out.println("\n"+st.state2Str());}
        }
    }
 
@@ -57,12 +56,13 @@ public class StackMachine {
    
    public void printProgram(){
       if(program == null){ 
-          System.out.println("No program loaded.");
+          System.out.println("No program loaded. Nothing to print !");
           return;
       }
       for(int i = 0 ; i < program.length; i++){
          System.out.println(addres2str(i) + " : " + program[i].pPrint(syn));
       }
+      //System.out.println("LabelsMap: \n"+ LabelsMap.mkInstance().toString());
    }
    
    public void loadFile(String p){ 

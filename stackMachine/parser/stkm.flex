@@ -40,7 +40,7 @@ import java.util.Hashtable;
 	    m.clear();
 	    prog.clear();
 	    pends.clear();
-	    ArrayList<Instr> prog = new ArrayList<>();
+	    prog = new ArrayList<>();
 	    pends = new Hashtable<String,ArrayList<Integer>>();
 	    Instr i;
 	    try{
@@ -59,10 +59,13 @@ import java.util.Hashtable;
 	    return prog.toArray(r);
 	}
 	
+	public int getL(){ return yyline +1;}
+	public int getC(){ return yycolumn +1;}
+	
 	private void declareLabel(String s){
 	   m.put(s,ic);
 	   ArrayList<Integer> pnd = pends.get(s);
-	   if(pnd != null){
+	   if(pnd != null && prog.size()>0){
 	      for(int  i =0; i < pnd.size(); i++){
 	         if(prog.get(pnd.get(i)) instanceof Jump){
 	            ((Jump)prog.get(pnd.get(i))).setTarget(ic);
@@ -214,7 +217,9 @@ SingleCharacter = [^\r\n\'\\]
 <COMMENT>{
     "-}"   { cCount--;  if(cCount == 0){ yybegin(YYINITIAL);}  }
     "{-"   {cCount++; }
-    [^"{-""-}"]  { /* descartar ! */}
+    "{"  { /* descartar ! */}
+    "}"  { /* descartar ! */}
+    [^"{-""-}"] { /* descartar ! */}
 }
  
 [^]            { throw new RuntimeException("unexpected input char at line " + (yyline+1) +  " '" + yytext() + "'"); }

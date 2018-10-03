@@ -16,5 +16,5 @@ start : getch
         putch
         putch
         push here
-        halt
+        
         
