@@ -103,7 +103,7 @@ public class MachState {
         s += "------------------------ MEMORY STATUS ----------------\n";
         s += x.length + " memory cells used \n";
         for(int i = 0; i < x.length; i++){
-            s += addres2str(x[i]) + " : " + memory[i].toString() + "\n";
+            s += addres2str(x[i]) + " : " + memory[x[i]].toString() + "\n";
         }
         return s;
    }

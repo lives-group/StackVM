@@ -40,8 +40,6 @@ import java.util.Hashtable;
 	    m.clear();
 	    prog.clear();
 	    pends.clear();
-	    prog = new ArrayList<>();
-	    pends = new Hashtable<String,ArrayList<Integer>>();
 	    Instr i;
 	    try{
  	       i = nextToken();
@@ -196,7 +194,7 @@ SingleCharacter = [^\r\n\'\\]
 
 
 <CHARLITERAL>{
-  {SingleCharacter}\' { yybegin(YYINITIAL); return new Push(yyline+1,yycolumn+1, (int)yytext().charAt(0)); }
+  {SingleCharacter}\' { yybegin(YYINITIAL); ic++;return new Push(yyline+1,yycolumn+1, (int)yytext().charAt(0)); }
   "\\\\"\'   {yybegin(YYINITIAL);  ic++; return new Push(yyline+1,yycolumn+1,(int)'\\');}
   "\\n"\'     {yybegin(YYINITIAL); ic++; return new Push(yyline+1,yycolumn+1,(int)'\n');}
   "\\t"\'     {yybegin(YYINITIAL); ic++; return new Push(yyline+1,yycolumn+1,(int)'\t');}

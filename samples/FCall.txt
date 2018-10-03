@@ -4,66 +4,76 @@
    memory, beginind at a given address.
    
    The fucntion must recive: 
-      - The point to return after it finishes.
-      - The number n
-      - The memory address to write the n's digits to.
+       The point to return after it finishes.
+       The number n
+       The memory address to write the n's digits to.
       
    these tree arguments will be passed, in their order on the stack.
-   Also for this example we will assume addresses 4094, 4095 and 4096 are 
+   Also for this example we will assume addresses 4092, 4093,4094 and 4095 are 
    to be used exclusively by the function.
 -}
 
-main : push 1
-       push 0  
-       subi     -- This will be our marker for the bootm of the stack
-       push 120  
-       push 0
-       store   -- cell 0 contains the number n
-       pop
-       push 120
-       push 2
-       store  -- saves 120 to cell 2, lets call it i
+main : pc              -- this point in program
+       push 6          -- Return point is six instructions after the pc Instruction. 
+       addi
+       push 4142       -- The numner to decompose
+       push 10         -- The address of memory where to put is
+       jump num2digits -- calling the function !
+       push '\n'       -- Return point of the function. We just print ok and halt !
+       push 'k'
+       push 'o'
+       putch
+       putch
+       putch
+       halt
         
 
-loop:  push 10
+num2digits:  
+       push 4092 
+       store     -- Save memor address to put number let's say a;
+       pop 
+       push 4093 
+       store    -- Save the  number n
+       pop
+       push 1
        push 0
+       subi     -- -1 marks the end of the stak. Below this point is the return address.
+       
+loop:  push 10
+       push 4093
        load      -- Load n
        divi      -- Div n 10
-       push 1   
+       push 4094   
        store     -- saves n/10 to 1, lets call it q
        push 10   
        multi     -- 10 * n/10
-       push 0    
+       push 4093    
        load      -- loads n
        subi      -- n - 10*(n/10)
-       push 1     
+       push 4094     
        load      -- loads q
-       push 0    
+       push 4093    
        store     -- saves q to n    
        push 0    
        eq
        not       
        jumpt loop -- if !(n==0) goto loop; When this finishes, we hve the digit's number in the stack !
 
-       
-
-putStr:dup        -- Start printing the numer
+putStr:dup        -- Start saving the number
        push 0
        gt 
        jumpt endPS
-       push 48    -- 48 is the ASCII to '0'
+       push 4092    -- Load the base address
+       load 
+       store        -- Top saved !
+       pop
+       push 4092
+       load
+       push 1
        addi
-       putch
+       push 4092
+       store       -- base = base + 1
+       pop
        jump putStr
-endPS: push '\n'           -- So we printed the number. We pritn a '\n' and get the next value of i
-       putch
-       push 2 
-       load      -- Loading i
-       push 1 
-       addi      -- i + 1
-       push 2
-       store     -- i = i + 1
-       push 0    
-       store       -- n = i;
-       jump while  -- All over again !!!
-end:   halt        -- ufa ! at last, rest !
+endPS: pop           -- So we saved the number. Remove the mark 
+       jumps         -- Jumping to the return point.
